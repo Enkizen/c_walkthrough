@@ -27,7 +27,7 @@ To increase performance and save time, Windows and other operating systems donâ€
 
 So to summarise:
 
-Windows removes the pointer and mark the sectors instead of overwriting with 0s when you recycle in bin.
+Windows removes the pointer and mark the sectors instead of overwriting with 0s then free up the pointer when you recycle in bin.
 
 */
 
