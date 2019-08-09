@@ -30,3 +30,19 @@ So to summarise:
 Windows removes the pointer and mark the sectors instead of overwriting with 0s when you recycle in bin.
 
 */
+
+
+/* Does the Filesystem affects the deletion? 
+   A file system is a piece of software that controls how data on a media is stored and retrieved. 
+   A file system manages operations such as copying, moving, and deleting files on a drive.
+   
+   Types:
+   NTFS NT File System
+   
+   FAT32 /exFAT
+   
+   HFS+ Herarchical File System 
+       
+   EXT 2, 3 and 4 
+     */  
+*/
