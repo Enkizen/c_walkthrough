@@ -50,10 +50,15 @@ Windows removes the pointer and mark the sectors instead of overwriting with 0s 
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #define BLOCK_SIZE 512 //since FAT comes in blocks of 512
+
+
 
 int main(int argc, char *argv[]) //argc number of items inputted. default main structure.
 //argv act like string array   
+int size_Char = sizeof( unsigned char );
+
 {
     if (argc != 2)//[0] should be the command to run this. [1] should be the file to recover.
     {
@@ -72,15 +77,17 @@ int main(int argc, char *argv[]) //argc number of items inputted. default main s
         return 2;
     }
    
-    BYTE buffer[BLOCK_SIZE];
+    unsigned char* buffer[BLOCK_SIZE]= malloc( size_Char * BLOCK_SIZE );
     int imageCount = 0;//initialize image count
     char filename[8];
     FILE *outptr = NULL;
-   
+
+    
    while (1)
     {
         // read a block of the memory card image
-        size_t bytesRead = fread(buffer, sizeof(BYTE), BLOCK_SIZE, inptr); //size_t is an unsigned integral data type which is defined in various header files
+        //size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)
+        size_t bytesRead = fread(buffer, sizeof(buffer), BLOCK_SIZE, inptr); //size_t is an unsigned integral data type which is defined in various header files
 
         // break out of the while loop when we reach the end of the card image
         if (bytesRead == 0 && feof(inptr))
@@ -107,7 +114,7 @@ int main(int argc, char *argv[]) //argc number of items inputted. default main s
             // write anytime we have an open file
             if (outptr != NULL)
             {
-               fwrite(buffer, sizeof(BYTE), bytesRead, outptr);
+               fwrite(buffer, sizeof(char*), bytesRead, outptr);
             }
         } 
    }  
@@ -116,7 +123,11 @@ int main(int argc, char *argv[]) //argc number of items inputted. default main s
 
     // close infile
     fclose(inptr);
-
+    
+    
+    //free
+    free(buffer);
+    
     // success
     return 0;
    
