@@ -44,5 +44,30 @@ Windows removes the pointer and mark the sectors instead of overwriting with 0s 
    HFS+ Herarchical File System 
        
    EXT 2, 3 and 4 
-     
+   
+   Yes. This assumes FAT first before dealing with other cases.
 */
+#include <stdio.h>
+#include <stdlib.h>
+
+#define BLOCK_SIZE 512 //since FAT comes into block of 512
+
+int main(int argc, char *argv[]) //argc number of items inputted. default main structure.
+//argv act like string array   
+{
+
+   
+//check if the beginning signature of a jpeg file
+if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0 ) == 0xe0)
+{
+
+//open new file pointer
+FILE *img = fopen(filename, "w");      
+   
+
+//Store
+sprintf(filename, "%03i.jpg" 2); // filename: char array store the resultant string 002.jpg
+}
+
+
+}
