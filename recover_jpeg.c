@@ -50,24 +50,77 @@ Windows removes the pointer and mark the sectors instead of overwriting with 0s 
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BLOCK_SIZE 512 //since FAT comes into block of 512
+#define BLOCK_SIZE 512 //since FAT comes in blocks of 512
 
 int main(int argc, char *argv[]) //argc number of items inputted. default main structure.
 //argv act like string array   
 {
-
+    if (argc != 2)//[0] should be the command to run this. [1] should be the file to recover.
+    {
+        fprintf(stderr, "Let us input the file 1 at a time first\n"); //output error message
+        return 1;
+    }
    
-//check if the beginning signature of a jpeg file
-if(buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0 ) == 0xe0)
-{
+   // remember filename to recover
+    char *infile = argv[1];
 
-//open new file pointer
-FILE *img = fopen(filename, "w");      
+    // open input file and get a pointer for read
+    FILE *inptr = fopen(infile, "r");
+    if (inptr == NULL)
+    {
+        fprintf(stderr, "Could not open %s.\n", infile);
+        return 2;
+    }
+   
+    BYTE buffer[BLOCK_SIZE];
+    int imageCount = 0;//initialize image count
+    char filename[8];
+    FILE *outptr = NULL;
+   
+   while (1)
+    {
+        // read a block of the memory card image
+        size_t bytesRead = fread(buffer, sizeof(BYTE), BLOCK_SIZE, inptr); //size_t is an unsigned integral data type which is defined in various header files
+
+        // break out of the while loop when we reach the end of the card image
+        if (bytesRead == 0 && feof(inptr))
+        {
+            break;
+        }
+
+        // check if we found a JPEG using beginning signature of a jpeg file
+        if( buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0){
+
+            // if we found a yet another JPEG, we must close the previous file
+            if (outptr != NULL)
+            {
+               fclose(outptr);
+               imageCount++;
+            }
+
+            // if we found a JPEG, we need to open the file for writing
+
+               sprintf(filename, "%03i.jpg", imageCount+1); //i dont like to start with 0
+               outptr = fopen(filename, "w");
+            
+
+            // write anytime we have an open file
+            if (outptr != NULL)
+            {
+               fwrite(buffer, sizeof(BYTE), bytesRead, outptr);
+            }
+        } 
+   }  
+    // close last jpeg file
+    fclose(outptr);
+
+    // close infile
+    fclose(inptr);
+
+    // success
+    return 0;
    
 
-//Store
-sprintf(filename, "%03i.jpg" 2); // filename: char array store the resultant string 002.jpg
-}
 
 
 }
