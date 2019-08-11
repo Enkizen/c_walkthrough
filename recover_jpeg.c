@@ -85,8 +85,18 @@ int size_Char = sizeof( unsigned char );
     
    while (1)
     {
-        // read a block of the memory card image
-        //size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)
+        /* read a block of the memory card image
+        *size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)
+        *In the C Programming Language, the fread function reads nmemb elements (each element is the number of bytes indicated by size) 
+        *from the stream pointed to by stream and stores them in ptr.
+        
+        ptr ~ The array where the elements will be stored.
+        size ~ The size of each element in bytes.
+        nmemb ~ The number of elements to read.
+        stream ~ The stream to read.
+        
+        Returns ~ The fread function returns the number of elements read. The fread function will return zero if nmemb is zero or size is zero.
+        */
         size_t bytesRead = fread(buffer, sizeof(buffer), BLOCK_SIZE, inptr); //size_t is an unsigned integral data type which is defined in various header files
 
         // break out of the while loop when we reach the end of the card image
