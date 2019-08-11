@@ -97,7 +97,17 @@ int size_Char = sizeof( unsigned char );
         
         Returns ~ The fread function returns the number of elements read. The fread function will return zero if nmemb is zero or size is zero.
         */
-        size_t bytesRead = fread(buffer, sizeof(buffer), BLOCK_SIZE, inptr); //size_t is an unsigned integral data type which is defined in various header files
+      
+        /*size_t is an unsigned integral data type 
+         which is used to represent the size of objects in bytes and is therefore used as the return type by the sizeof operator. 
+         It is guaranteed to be big enough to contain the size of the biggest object the host system can handle. 
+         Basically the maximum permissible size is dependent on the compiler; 
+         if the compiler is 32 bit then it is simply a typedef(i.e., alias) for unsigned int 
+         but if the compiler is 64 bit then it would be a typedef for unsigned long long. The size_t data type is never negative.
+
+         Therefore many C library functions like malloc, memcpy and strlen declare their arguments and return type as size_t. 
+         */
+        size_t bytesRead = fread(buffer, sizeof(buffer), BLOCK_SIZE, inptr); 
 
         // break out of the while loop when we reach the end of the card image
         if (bytesRead == 0 && feof(inptr))
