@@ -77,7 +77,7 @@ int size_Char = sizeof( unsigned char );
         return 2;
     }
    
-    unsigned char* buffer[BLOCK_SIZE]= malloc( size_Char * BLOCK_SIZE );
+    unsigned char* buffer[BLOCK_SIZE]= malloc( size_Char * BLOCK_SIZE ); //max size array? If it is signed, what will change?
     int imageCount = 0;//initialize image count
     char filename[8];
     FILE *outptr = NULL;
