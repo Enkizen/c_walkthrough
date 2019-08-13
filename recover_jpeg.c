@@ -87,15 +87,20 @@ int size_Char = sizeof( unsigned char );
     {
         /* read a block of the memory card image
         *size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)
-        *In the C Programming Language, the fread function reads nmemb elements (each element is the number of bytes indicated by size) 
-        *from the stream pointed to by stream and stores them in ptr.
+        *The fread function copies nmemb items of data of size size from the named input stream into an array pointed to by ptr. 
+        An item of data is a sequence of bytes (not necessarily terminated by a null byte) of length size. 
+        fread stops appending bytes when nmemb items have been read, or end of file has been reached, or an error has occurred. 
+        Upon returning, fread sets the file pointer in the stream pointing to the byte past the last byte that has been read. 
+        The contents of stream remain unchanged. The fread function returns the number of items actually read. 
+        If nmemb is zero, no action is taken and the function will return 0.
         
         ptr ~ The array where the elements will be stored.
         size ~ The size of each element in bytes.
         nmemb ~ The number of elements to read.
         stream ~ The stream to read.
         
-        Returns ~ The fread function returns the number of elements read. The fread function will return zero if nmemb is zero or size is zero.
+        Returns ~ The fread function returns the number of elements read. The fread function will return zero 
+        if nmemb is zero or size is zero.
         */
       
         /*size_t is an unsigned integral data type 
